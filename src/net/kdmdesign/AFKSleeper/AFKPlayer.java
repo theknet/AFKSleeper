@@ -11,14 +11,27 @@ public class AFKPlayer {
 	public AFKPlayer(Player player) {
 		
 		this.player = player;
-		this.status = AFKStatus.ONLINE;
 		this.lastUpdate = System.currentTimeMillis();
+		
+		this.setStatus(AFKStatus.ONLINE);
 	}
 	
 	public void setStatus(AFKStatus status) {
 		
 		this.status = status;
 		this.lastUpdate = System.currentTimeMillis();
+		
+		this.updatePlayerName();
+	}
+	
+	public void updatePlayerName() {
+		
+		if(this.isAFK()) {
+			this.player.setPlayerListName("[AFK] " + this.player.getDisplayName());
+		}
+		else {
+			this.player.setPlayerListName(this.player.getDisplayName());
+		}
 	}
 	
 	public boolean isAFK() {
